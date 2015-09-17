@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Instagram Searcher</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+    <body ng-controller="SearchController" class="brown darken-2 white-text">
+
+            <nav class="z-depth-0 white-text" ng-class="{'green darken-3': success, 'red darken-4': error, 'brown': !success && !error, 'amber': trying }">
+                <div class="nav-wrapper">
+                    <form class="menu-form" role="form" name="searchForm" novalidate ng-submit="getImages()">
+                        <div class="row valign-wrapper">
+                            <div class="input-field col s10 valign">
+                                <input name="tag" type="text" class="validate" ng-model="tag" required placeholder="Enter a tag to search for, then press enter.">
+                                <label for="search"><i class="material-icons">search</i></label>
+                                <span ng-show="searchForm.tag.$invalid && searchForm.tag.length > 0" class="error">A single word with letters and numbers only.</span>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </nav>
+        <div class="container">
+            <div class="logo-wrapper brown-text text-lighten-3" ng-cloak ng-if="!images.length">
+                <h1 class="logo center-align">InstaSearch</h1>
+                <h3 class="slogan center-align">a tool for searching Instagram. try it out!</h3>
+            </div>
+            <div class="instagram-results row" ng-cloak ng-if="images.length">
+                <div class="col m4 col s6 thumb" ng-repeat="item in images">                
+                     <div class="card">
+                        <div class="card-image">
+                            <a class="thumbnail" ng-href="{{item.link}}" ng-cloak>
+                                <img class="responsive-img" ng-src="{{ item.images.low_resolution.url }}" alt="{{ item.caption.text }}" ng-cloak>
+                            </a>
+                          <a href="https://instagram.com/{{ item.user.username }}/"><span class="card-title white teal-text text-darken-4">@{{ item.user.username }}</span></a>
+                        </div>
+                        <div class="card-content">
+                          <div class="row">
+                            <div class="col s8">
+                                <div class="row">
+                                <div class="chip teal-text" ng-repeat="tag in item.tags|limitTo:3">
+                                    #{{ tag }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col s4">
+                                <div>
+                                    <span class="white teal-text">Likes: {{ item.likes.count }}</span>
+                                </div>
+                                <div>
+                                    <span class="white teal-text">Comments: {{ item.comments.count }}</span>
+                                </div>  
+                            </div>                        
+                          </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-animate.min.js" type="text/javascript"></script>
+        <script src="app.js" type="text/javascript"></script>
+        <script src="controllers.js" type="text/javascript"></script>
+    </body>
+</html>
