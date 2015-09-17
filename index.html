@@ -17,7 +17,7 @@
                             <div class="input-field col s10 valign">
                                 <input name="tag" type="text" class="validate" ng-model="tag" required placeholder="Enter a tag to search for, then press enter.">
                                 <label for="search"><i class="material-icons">search</i></label>
-                                <span ng-show="searchForm.tag.$invalid && searchForm.tag.length > 0" class="error">A single word with letters and numbers only.</span>
+                                <span ng-show="searchForm.tag.$invalid && !searchForm.tag.$pristine" class="error">A single word with letters and numbers only.</span>
                             </div>
                         </div>
                     </form>
